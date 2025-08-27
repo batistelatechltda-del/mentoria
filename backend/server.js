@@ -1,51 +1,60 @@
 const env = require("dotenv");
 const path = require("path");
 const cron = require("node-cron");
-const app = require("./app");
+const express = require("express");
+const cors = require("cors");
 const { logger } = require("./configs/logger");
 const { createAndSendEmail } = require("./configs/email");
 const { prisma } = require("./configs/prisma");
-const {
-  emailTemplateForReminder,
-} = require("./email/emailTemplateForReminder");
-
-const cors = require('cors');
-app.use(cors({
-  origin: "https://mentoria-frontend-9kbe.onrender.com", // URL do seu frontend no Render
-  credentials: true
-}));
-
+const { emailTemplateForReminder } = require("./email/emailTemplateForReminder");
 const sendSMS = require("./configs/twilio");
 const dayjs = require("dayjs");
 const { pusher } = require("./configs/pusher");
+const authRoutes = require("./routes/auth/auth.routes"); // Importa as rotas de autenticação
 
+// Configuração de variáveis de ambiente
 const envFile =
   process.env.NODE_ENV == "development"
     ? ".env.development"
     : process.env.NODE_ENV == "staging"
-      ? ".env.staging"
-      : process.env.NODE_ENV == "test"
-        ? ".env.test"
-        : ".env";
-
-const express = require("express");
-const app = express();
-const authRoutes = require("./routes/auth/auth.routes");  // Importa as rotas de autenticação
-
-// Certifique-se de que você está usando o middleware de autenticação
-app.use("/api/auth", authRoutes);  // Prefixa as rotas com /api/auth
+    ? ".env.staging"
+    : process.env.NODE_ENV == "test"
+    ? ".env.test"
+    : ".env";
 
 env.config({ path: path.resolve(__dirname, envFile), override: true });
-const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
-  logger.info(`🚀 Server is listening at port ${PORT}
-  🌍 Environment: ${process.env.NODE_ENV || "live"}
-  ⚙️ Loaded Config from: ${envFile}
-  🧪 TEST_VAR: ${process.env.TEST_VAR}`);
+// Instância do Express
+const app = express();
+
+// Middleware de CORS
+app.use(cors({
+  origin: "https://mentoria-frontend-9kbe.onrender.com", // URL do frontend no Render
+  credentials: true,
+}));
+
+// Middleware de parse do corpo das requisições
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Configuração das rotas
+app.use("/api/auth", authRoutes);  // Prefixa as rotas com /api/auth
+
+// Rota raiz para verificar se o servidor está funcionando
+app.get("/", async (req, res) => {
+  res.send("Server is running");
 });
 
+// Porta que o servidor vai escutar
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  logger.info(`🚀 Server is listening at port ${PORT}
+🌍 Environment: ${process.env.NODE_ENV || "live"}
+⚙️ Loaded Config from: ${envFile}
+🧪 TEST_VAR: ${process.env.TEST_VAR}`);
+});
 
+// Cron jobs
 cron.schedule("*/1 * * * *", async () => {
   const currentDate = dayjs().toISOString();
 
@@ -102,7 +111,6 @@ cron.schedule("*/1 * * * *", async () => {
         }
       }
 
-
       const html = emailTemplateForReminder({ username, title, description });
 
       try {
@@ -141,10 +149,7 @@ cron.schedule("*/1 * * * *", async () => {
           data: { is_email_sent: true },
         });
       } catch (err) {
-        console.error(
-          `Failed ${type} notification for user ${item.user.email}:`,
-          err
-        );
+        console.error(`Failed ${type} notification for user ${item.user.email}:`, err);
       }
     });
 
@@ -251,8 +256,3 @@ cron.schedule("*/30 * * * *", async () => {
   );
 });
 
-
-
-app.get("/", async (req, res) => {
-  res.send("server is running");
-});
