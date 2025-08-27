@@ -28,6 +28,13 @@ const envFile =
         ? ".env.test"
         : ".env";
 
+const express = require("express");
+const app = express();
+const authRoutes = require("./routes/auth/auth.routes");  // Importa as rotas de autenticação
+
+// Certifique-se de que você está usando o middleware de autenticação
+app.use("/api/auth", authRoutes);  // Prefixa as rotas com /api/auth
+
 env.config({ path: path.resolve(__dirname, envFile), override: true });
 const PORT = process.env.PORT || 8000;
 
