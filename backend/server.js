@@ -9,7 +9,11 @@ const {
   emailTemplateForReminder,
 } = require("./email/emailTemplateForReminder");
 
-
+const cors = require('cors');
+app.use(cors({
+  origin: "https://mentoria-frontend-9kbe.onrender.com", // URL do seu frontend no Render
+  credentials: true
+}));
 
 const sendSMS = require("./configs/twilio");
 const dayjs = require("dayjs");
