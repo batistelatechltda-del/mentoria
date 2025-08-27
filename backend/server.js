@@ -26,10 +26,9 @@ const envFile =
 
 env.config({ path: path.resolve(__dirname, envFile), override: true });
 const PORT = process.env.PORT || 8000;
-const HOST = process.env.HOST || "192.168.18.71";
 
-app.listen(PORT, HOST, () => {
-  logger.info(`🚀 Server is listening at http://${HOST}:${PORT}
+app.listen(PORT, () => {
+  logger.info(`🚀 Server is listening at port ${PORT}
   🌍 Environment: ${process.env.NODE_ENV || "live"}
   ⚙️ Loaded Config from: ${envFile}
   🧪 TEST_VAR: ${process.env.TEST_VAR}`);
