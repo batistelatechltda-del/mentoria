@@ -33,6 +33,18 @@ const verifyOTP = require("../../middlewares/verifyOtp");
 const verifyOtpAuthToken = require("../../middlewares/verifyOtpAuthToken.middleware");
 const handleMultipartData = require("../../middlewares/populateMultipartData.middleware");
 
+// Exemplo de configuração no auth.controller.js
+const register = async (req, res) => {
+  try {
+    const { username, password, email } = req.body;
+    // Lógica de registro do usuário
+    // Depois de cadastrar, envie uma resposta
+    res.status(201).send("User registered");
+  } catch (err) {
+    res.status(500).send("Error registering user");
+  }
+};
+
 router.post("/subscription", verifyUserByToken, subscription);
 router.post("/register", validateRequest(userRegisterSchema), register);
 router.post("/login", validateRequest(userLoginSchema), login);
