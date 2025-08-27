@@ -1,7 +1,7 @@
 import RemindersPage from "@/components/dashboard/reminder";
 import { cookies } from "next/headers";
 
-async function getJournal() {
+async function getReminders() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -10,7 +10,7 @@ async function getJournal() {
       `${process.env.NEXT_PUBLIC_BASE_URL_SERVER}/api/client/reminder/get-all`,
       {
         headers: {
-          authorization: `${token}`,
+          authorization: `Bearer ${token}`,
         },
       }
     );
@@ -24,8 +24,8 @@ async function getJournal() {
 }
 
 async function page() {
-  const reminder: any = await getJournal();
-  return <RemindersPage reminder={reminder} />;
+  const reminders: any = await getReminders();
+  return <RemindersPage reminder={reminders} />;
 }
 
 export default page;
