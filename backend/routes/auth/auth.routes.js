@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const validateRequest = require("../../middlewares/validateRequestJoi.middleware");
 
+// Middlewares de validação
+const validateRequest = require("../../middlewares/validateRequestJoi.middleware");
 const {
   userRegisterSchema,
   userLoginSchema,
@@ -13,6 +14,7 @@ const {
   profileUpdateSchema,
 } = require("../../validations/auth");
 
+// Funções do controlador de autenticação
 const {
   register,
   login,
@@ -28,25 +30,16 @@ const {
   updateProfile,
   subscription,
 } = require("../../controllers/auth/auth.controllers");
+
+// Middlewares de verificação e multipart data
 const verifyUserByToken = require("../../middlewares/verifyUserByToken");
 const verifyOTP = require("../../middlewares/verifyOtp");
 const verifyOtpAuthToken = require("../../middlewares/verifyOtpAuthToken.middleware");
 const handleMultipartData = require("../../middlewares/populateMultipartData.middleware");
 
-// Exemplo de configuração no auth.controller.js
-const register = async (req, res) => {
-  try {
-    const { username, password, email } = req.body;
-    // Lógica de registro do usuário
-    // Depois de cadastrar, envie uma resposta
-    res.status(201).send("User registered");
-  } catch (err) {
-    res.status(500).send("Error registering user");
-  }
-};
-
+// Definindo as rotas
 router.post("/subscription", verifyUserByToken, subscription);
-router.post("/register", validateRequest(userRegisterSchema), register);
+router.post("/register", validateRequest(userRegisterSchema), register);  // A função register é chamada aqui
 router.post("/login", validateRequest(userLoginSchema), login);
 router.post(
   "/generateForgetLink",
@@ -86,6 +79,5 @@ router.patch(
 
 router.get("/", verifyUserByToken, getUserId);
 router.get("/logout", verifyUserByToken, logout);
-
 
 module.exports = router;
