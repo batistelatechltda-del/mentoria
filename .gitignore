@@ -12,7 +12,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # Backend env
 backend/.env*
 
-!.env.example
+!.env.example  # Deixe o exemplo para configuração de ambiente
 
 # Runtime data
 pids
@@ -70,9 +70,9 @@ web_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variable files
-.env
-.env.*
+# dotenv environment variable files (comente ou remova as linhas abaixo se não quiser versionar o .env)
+# .env
+# .env.*
 !.env.example
 
 # parcel-bundler cache (https://parceljs.org/)
