@@ -29,7 +29,10 @@ const app = express();
 
 // Middleware de CORS
 app.use(cors({
-  origin: "https://mentoria-frontend-9kbe.onrender.com", // URL do frontend no Render
+  origin: [
+    "https://mentoria-frontend-9kbe.onrender.com", // antigo (opcional)
+    "https://mentoraiforlife.com"                  // novo domínio
+  ],
   credentials: true,
 }));
 
