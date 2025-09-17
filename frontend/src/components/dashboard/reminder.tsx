@@ -221,7 +221,7 @@ const RemindersPage = ({ reminder }: any) => {
       <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
           <button
-            onClick={() => router.back()}
+            onClick={() => router.push("/dashboard")}
             className="flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
           >
             <ArrowLeft size={18} className="mr-2" />
