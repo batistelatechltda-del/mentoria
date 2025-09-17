@@ -62,6 +62,8 @@ const Dashboard: React.FC<DashboardProps> = ({
   const pathname = usePathname();
   const { user }: any = useUser();
 
+  
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -332,18 +334,24 @@ const Dashboard: React.FC<DashboardProps> = ({
             <div className="flex items-center gap-2">
               <Link
                 href="/dashboard/lifearea"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 disabled:opacity-50 disabled:pointer-events-none bg-transparent hover:bg-white/10 px-3 py-1.5 text-white hover:text-purple-200 border border-transparent hover:border-white/10 backdrop-blur-sm"
               >
                 Lifearea Map
               </Link>
               <Link
                 href="/dashboard/profile"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 disabled:opacity-50 disabled:pointer-events-none bg-transparent hover:bg-white/10 px-3 py-1.5 text-white hover:text-purple-200 border border-transparent hover:border-white/10 backdrop-blur-sm"
               >
                 Profile
               </Link>
               <Link
                 href="/dashboard/settings"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 disabled:opacity-50 disabled:pointer-events-none bg-transparent hover:bg-white/10 px-3 py-1.5 text-white hover:text-purple-200 border border-transparent hover:border-white/10 backdrop-blur-sm"
               >
                 Settings
