@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-function page() {
+function Page() {
   const router = useRouter();
   const starsRef = useRef<HTMLDivElement>(null);
 
@@ -24,6 +24,7 @@ function page() {
       }
     }
   }, []);
+
   return (
     <div className="min-h-screen flex flex-col px-6 bg-black from-slate-950 bg-gradient-to-b">
       <div
@@ -32,8 +33,9 @@ function page() {
         style={{ zIndex: 0 }}
       />
       <div>
-        <button onClick={() => router.back()} className="cursor-pointer">
-          <ArrowLeft className="w-5 h-5 my-5 " />
+        {/* Agora volta sempre para o dashboard */}
+        <button onClick={() => router.push("/dashboard")} className="cursor-pointer">
+          <ArrowLeft className="w-5 h-5 my-5" />
         </button>
       </div>
       <LifeAreasEmbed />
@@ -41,4 +43,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
