@@ -150,6 +150,8 @@ const Sidebar = ({ sidebarData }: any) => {
           )}
           <Link
             href="/dashboard/goals"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium group"
           >
             View All Goals
@@ -194,6 +196,8 @@ const Sidebar = ({ sidebarData }: any) => {
           )}
           <Link
             href="/dashboard/journal"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium group"
           >
             View Journal
@@ -242,6 +246,8 @@ const Sidebar = ({ sidebarData }: any) => {
           )}
           <Link
             href="/dashboard/calendar"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium group"
           >
             View Calendar
@@ -294,6 +300,8 @@ const Sidebar = ({ sidebarData }: any) => {
           )}
           <Link
             href="/dashboard/reminders"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300 font-medium group"
           >
             View Reminders
