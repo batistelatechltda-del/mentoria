@@ -1,5 +1,3 @@
-import Dashboard from "@/components/dashboard/home";
-import { cookies } from "next/headers";
 async function getConversation() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -14,13 +12,32 @@ async function getConversation() {
       }
     );
 
-    const data = await res.json();
-    return data?.data == null ? [] : data?.data || [];
+    const text = await res.text();
+
+    if (!res.ok) {
+      console.error(
+        `[API ERROR ${res.status}] /conversation/get/all`,
+        text.slice(0, 500)
+      );
+      return [];
+    }
+
+    try {
+      const data = JSON.parse(text);
+      return data?.data ?? [];
+    } catch (e) {
+      console.error(
+        "[API INVALID JSON] /conversation/get/all",
+        text.slice(0, 500)
+      );
+      return [];
+    }
   } catch (err) {
-    console.log(err);
+    console.error("[FETCH ERROR] /conversation/get/all", err);
     return [];
   }
 }
+
 async function getSidebarData() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -35,18 +52,28 @@ async function getSidebarData() {
       }
     );
 
-    const data = await res.json();
-    return data?.data == null ? {} : data?.data || {};
+    const text = await res.text();
+
+    if (!res.ok) {
+      console.error(
+        `[API ERROR ${res.status}] /conversation/todo/get-all`,
+        text.slice(0, 500)
+      );
+      return {};
+    }
+
+    try {
+      const data = JSON.parse(text);
+      return data?.data ?? {};
+    } catch (e) {
+      console.error(
+        "[API INVALID JSON] /conversation/todo/get-all",
+        text.slice(0, 500)
+      );
+      return {};
+    }
   } catch (err) {
-    console.log(err);
-    return [];
+    console.error("[FETCH ERROR] /conversation/todo/get-all", err);
+    return {};
   }
 }
-
-async function page() {
-  const conversation: any = await getConversation();
-  const sidebarData: any = await getSidebarData();
-  return <Dashboard conversation={conversation} sidebarData={sidebarData} />;
-}
-
-export default page;
